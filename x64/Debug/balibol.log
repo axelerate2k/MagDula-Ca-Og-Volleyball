@@ -1,0 +1,8 @@
+﻿  main.cpp
+C:\Users\Lance Axel Gasmen\OneDrive\Desktop\haha\repo\cmsc21_finals-main\cmsc21_finals-main\balibol\Animation.h(46,50): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\Lance Axel Gasmen\OneDrive\Desktop\haha\repo\cmsc21_finals-main\cmsc21_finals-main\balibol\main.cpp(334,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lance Axel Gasmen\OneDrive\Desktop\haha\repo\cmsc21_finals-main\cmsc21_finals-main\balibol\main.cpp(335,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Lance Axel Gasmen\OneDrive\Desktop\haha\repo\cmsc21_finals-main\cmsc21_finals-main\balibol\main.cpp(357,14): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
+  balibol.vcxproj -> C:\Users\Lance Axel Gasmen\OneDrive\Desktop\haha\repo\cmsc21_finals-main\cmsc21_finals-main\x64\Debug\balibol.exe
