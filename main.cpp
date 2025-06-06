@@ -17,24 +17,26 @@ GameManager::GameManager() : window(VideoMode(WIDTH, HEIGHT), "Magdula Ca ug Vol
     initialize();
 }
 
-void GameManager::initialize() {
+void GameManager::initialize() 
+{
     setupGraphics();
     setupAnimations();
     setupUI();
     setupAudio();
 
-    // Initialize positions
+    //initialize positionsz
     ballC.setX(250); ballC.setY(150);
     p1C.setX(200); p1C.setY(840);
     p2C.setX(1400); p2C.setY(840);
 
-    // Initialize player states
+    //initialize player states
     p1C.setCurrentState(IDLE); p2C.setCurrentState(IDLE);
     p1C.setIsJumping(false); p1C.setIsBottom(true); p1C.setScore(0);
     p2C.setIsJumping(false); p2C.setIsBottom(true); p2C.setScore(0);
 }
 
-void GameManager::setupAnimations() {
+void GameManager::setupAnimations() 
+{ //hell yeaaaaaaaah
     p1IdleAnim.loadFrames("images/p1_idle_", 8); p1IdleAnim.setFrameTime(0.15f);
     p1RunAnim.loadFrames("images/p1_run_", 8); p1RunAnim.setFrameTime(0.1f);
     p1JumpAnim.loadFrames("images/p1_jump_", 1); p1JumpAnim.setLoop(false);
@@ -47,7 +49,8 @@ void GameManager::setupAnimations() {
     p2Sprite.setScale(-5.0f, 5.0f); p2Sprite.setOrigin(30, 48);
 }
 
-void GameManager::setupUI() {
+void GameManager::setupUI() 
+{
     font.loadFromFile("font/arcade.ttf");
 
     title.setFont(font); title.setCharacterSize(150); title.setFillColor(Color::Black);
@@ -79,14 +82,16 @@ void GameManager::setupUI() {
     instructionText.setPosition(200, 100);
 }
 
-void GameManager::setupAudio() {
-    music.openFromFile("musics/mainMusic.wav");
+void GameManager::setupAudio() 
+{
+    music.openFromFile("musics/upmahal.mp3");
     bounceb.loadFromFile("musics/Bounce.wav"); bounce.setBuffer(bounceb);
     crowdb.loadFromFile("musics/Crowd.wav"); crowd.setBuffer(crowdb);
     scoreb.loadFromFile("musics/ScoreM.wav"); scoreM.setBuffer(scoreb);
 }
 
-void GameManager::setupGraphics() {
+void GameManager::setupGraphics() 
+{
     Image icon; icon.loadFromFile("images/ry.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
@@ -105,20 +110,21 @@ void GameManager::setupGraphics() {
     cloud1.setPosition(10.f, 100.f); cloud2.setPosition(900.f, 70.f);
 }
 
-void GameManager::run() {
+void GameManager::run() 
+{
     music.play();
 
-    while (window.isOpen()) {
+    while (window.isOpen()) 
+    {
         handleEvents();
         float deltaTime = animationClock.restart().asSeconds();
 
-        if (instructionScreen) {
+        if (instructionScreen) 
             showInstructions();
-        }
-        else if (!start) {
+        else if (!start) 
             showMainMenu();
-        }
-        else {
+        else 
+        {
             music.stop();
             updateGame(deltaTime);
             render();
@@ -128,29 +134,33 @@ void GameManager::run() {
     }
 }
 
-void GameManager::handleEvents() {
+void GameManager::handleEvents() 
+{
     Event event;
-    while (window.pollEvent(event)) {
+    while (window.pollEvent(event)) 
         if (event.type == Event::Closed) window.close();
-    }
 
-    if (instructionScreen && Keyboard::isKeyPressed(Keyboard::Enter)) {
+    if (instructionScreen && Keyboard::isKeyPressed(Keyboard::Enter)) 
+    {
         instructionScreen = false;
         sleep(milliseconds(200));
     }
 
-    if (Keyboard::isKeyPressed(Keyboard::Enter) && !start) {
+    if (Keyboard::isKeyPressed(Keyboard::Enter) && !start) 
+    {
         start = true;
         window.clear();
     }
 }
 
-void GameManager::showInstructions() {
+void GameManager::showInstructions() 
+{
     window.clear(Color::White);
     window.draw(instructionText);
 }
 
-void GameManager::showMainMenu() {
+void GameManager::showMainMenu() 
+{
     window.clear();
     Time dt = clock.restart();
     float delta = dt.asSeconds();
@@ -166,8 +176,9 @@ void GameManager::showMainMenu() {
     window.draw(title); window.draw(startText);
 }
 
-void GameManager::updateGame(float deltaTime) {
-    // Update animations
+void GameManager::updateGame(float deltaTime) 
+{
+    //update animations 
     p1IdleAnim.update(deltaTime); p1RunAnim.update(deltaTime); p1JumpAnim.update(deltaTime);
     p2IdleAnim.update(deltaTime); p2RunAnim.update(deltaTime); p2JumpAnim.update(deltaTime);
 
@@ -177,33 +188,35 @@ void GameManager::updateGame(float deltaTime) {
     checkCollisions();
 }
 
-void GameManager::updatePlayer1(float deltaTime) {
-    // Store previous position BEFORE updating current position
+void GameManager::updatePlayer1(float deltaTime) 
+{
     float prevX = p1C.getX();
     float prevY = p1C.getY();
 
-    // Determine P1 state
+    //determine p1 states
     PlayerState newState = IDLE;
     if (p1C.getIsJumping() || !p1C.getIsBottom()) newState = JUMPING;
     else if (Keyboard::isKeyPressed(Keyboard::A) || Keyboard::isKeyPressed(Keyboard::D)) newState = RUNNING;
 
-    if (p1C.getCurrentState() != newState) {
+    if (p1C.getCurrentState() != newState) 
+    {
         p1C.setCurrentState(newState);
         if (newState == RUNNING) p1RunAnim.reset();
         else if (newState == JUMPING) p1JumpAnim.reset();
         else p1IdleAnim.reset();
     }
 
-    // Jump - Check jump FIRST, before movement affects isBottom
+    //CHECK JUMP FIRSSTTTTT
     bool jumpPressed = Keyboard::isKeyPressed(Keyboard::W);
-    if (jumpPressed && !wasP1JumpPressed && p1C.getIsBottom() && !p1C.getIsJumping()) {
+    if (jumpPressed && !wasP1JumpPressed && p1C.getIsBottom() && !p1C.getIsJumping()) 
+    {
         p1C.setIsJumping(true);
         p1C.setIsBottom(false);
         p1C.setIsFalling(false);
     }
     wasP1JumpPressed = jumpPressed;
 
-    // Movement
+    //movement
     float speed = Keyboard::isKeyPressed(Keyboard::Space) ? 20.0f : 10.0f;
     if (Keyboard::isKeyPressed(Keyboard::A)) {
         p1C.setX(p1C.getX() - speed);
@@ -212,7 +225,7 @@ void GameManager::updatePlayer1(float deltaTime) {
         p1C.setX(p1C.getX() + speed);
     }
 
-    // Physics
+    //pisiks
     if (p1C.getIsJumping() && !p1C.getIsFalling()) {
         p1C.setY(p1C.getY() - gravity);
     }
@@ -220,52 +233,54 @@ void GameManager::updatePlayer1(float deltaTime) {
         p1C.setY(p1C.getY() + gravity);
     }
 
-    // Boundary checks
+    //boundary checc
     if (p1C.getY() >= Y_BOTTOM) {
         p1C.setY(Y_BOTTOM);
         p1C.setIsBottom(true);
-        p1C.setIsJumping(false);  // Add this line
+        p1C.setIsJumping(false); 
         p1C.setIsFalling(false);
     }
     if (p1C.getY() <= Y_BOTTOM - 250) {
         p1C.setIsJumping(false);
-        p1C.setIsFalling(true);  // Add this line
+        p1C.setIsFalling(true);
     }
     if (p1C.getX() <= 64) p1C.setX(64);
     if (p1C.getX() >= 736) p1C.setX(736);
 
-    // Update previous position AFTER all movement calculations
+    //update prev after all movement calculations
     p1C.setPrevX(prevX);
     p1C.setPrevY(prevY);
 }
 
-void GameManager::updatePlayer2(float deltaTime) {
-    // Store previous position BEFORE updating current position
+void GameManager::updatePlayer2(float deltaTime) 
+{
     float prevX = p2C.getX();
     float prevY = p2C.getY();
 
-    // Determine P2 state
+    //determine p2 states
     PlayerState newState = IDLE;
     if (p2C.getIsJumping() || !p2C.getIsBottom()) newState = JUMPING;
     else if (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::Right) ||
         Keyboard::isKeyPressed(Keyboard::Numpad4) || Keyboard::isKeyPressed(Keyboard::Numpad6)) newState = RUNNING;
 
-    if (p2C.getCurrentState() != newState) {
+    if (p2C.getCurrentState() != newState) 
+    {
         p2C.setCurrentState(newState);
         if (newState == RUNNING) p2RunAnim.reset();
         else if (newState == JUMPING) p2JumpAnim.reset();
         else p2IdleAnim.reset();
     }
-    // Jump - Check jump BEFORE physics update
+    //CHECK JUMP FIRST AGAIN
     bool jumpPressed = Keyboard::isKeyPressed(Keyboard::Up) || Keyboard::isKeyPressed(Keyboard::Numpad8);
-    if (jumpPressed && !wasP2JumpPressed && p2C.getIsBottom()) {
+    if (jumpPressed && !wasP2JumpPressed && p2C.getIsBottom()) 
+    {
         p2C.setIsJumping(true);
         p2C.setIsBottom(false);
         p2C.setIsFalling(false);
     }
     wasP2JumpPressed = jumpPressed;
 
-    // Movement
+    //movement
     float speed = Keyboard::isKeyPressed(Keyboard::RShift) ? 20.0f : 10.0f;
     if (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::Numpad4)) {
         p2C.setX(p2C.getX() - speed);
@@ -276,66 +291,64 @@ void GameManager::updatePlayer2(float deltaTime) {
         if (p2C.getIsBottom() && !p2C.getIsJumping()) p2C.setIsBottom(false);
     }
 
-
-    // Physics
-    if (p2C.getIsJumping() && !p2C.getIsFalling()) {
+    //phee seekz
+    if (p2C.getIsJumping() && !p2C.getIsFalling()) 
         p2C.setY(p2C.getY() - gravity);
-    }
-    else {
-        p2C.setY(p2C.getY() + gravity);
-    }
+    else p2C.setY(p2C.getY() + gravity);
 
-    // Boundary checks
-    if (p2C.getY() >= Y_BOTTOM) {
+    //check boundaries
+    if (p2C.getY() >= Y_BOTTOM) 
+    {
         p2C.setY(Y_BOTTOM);
         p2C.setIsBottom(true);
-        p2C.setIsJumping(false);  // Add this line
+        p2C.setIsJumping(false);
         p2C.setIsFalling(false);
     }
-    if (p2C.getY() <= Y_BOTTOM - 250) {
+    if (p2C.getY() <= Y_BOTTOM - 250) 
+    {
         p2C.setIsJumping(false);
-        p2C.setIsFalling(true);  // Add this line
+        p2C.setIsFalling(true); 
     }
     if (p2C.getX() <= 864) p2C.setX(864);
     if (p2C.getX() >= WIDTH - 64) p2C.setX(WIDTH - 64);
 
-    // Update previous position AFTER all movement calculations
+    //tsaka ka lang mag update
     p2C.setPrevX(prevX);
     p2C.setPrevY(prevY);
 }
 
-void GameManager::updateBall() {
+void GameManager::updateBall() 
+{
     ballC.setX(ballC.getX() + dx);
     ballC.setY(ballC.getY() + dy);
 
-    // Wall collision
+    //wall collisions
     if (FloatRect(ballC.getX() - (96 * 0.7f), ballC.getY() - (96 * 0.7f), 96 * 0.7f * 2, 96 * 0.7f * 2).intersects(wall.getGlobalBounds())) {
-        if (ballC.getY() <= 490) {
+        if (ballC.getY() <= 490) 
+        {
             dy = -dy;
             ballC.setY(520 - (96 * 0.7f));
         }
-        else {
+        else 
             dx = -dx;
-        }
     }
 
-    // Boundary collisions
-    if (ballC.getX() + (96 * 0.7) >= WIDTH || ballC.getX() - (96 * 0.7) <= 0) {
+    //boundary collisions
+    if (ballC.getX() + (96 * 0.7) >= WIDTH || ballC.getX() - (96 * 0.7) <= 0) 
         dx = -dx;
-    }
-
-    // Apply gravity when ball is in air
+    //gravity per frame (ball in d air)
     if (ballC.getY() + (96 * 0.7f) < Y_BOTTOM) {
         dy += gravityAcceleration;
         if (dy > maxFallSpeed) dy = maxFallSpeed;
     }
 
-    // Limit velocities
+    //limit velocities (ito nlng update niyo if want niyo ibang feel ng physics)
     if (abs(dx) >= 21) dx = (dx < 0) ? -21 : 21;
     if (abs(dy) >= 21) dy = (dy < 0) ? -21 : 21;
 
-    // Scoring
-    if (ballC.getY() + (96 * 0.7) >= Y_BOTTOM) {
+    //iskor
+    if (ballC.getY() + (96 * 0.7) >= Y_BOTTOM) 
+    {
         scoreM.play();
         ballC.setY(80);
         p1C.setX(200);
@@ -343,11 +356,13 @@ void GameManager::updateBall() {
         p2C.setX(1400);
         p2C.setY(Y_BOTTOM);
 
-        if (ballC.getX() <= 790) {
+        if (ballC.getX() <= 790) 
+        {
             ballC.setX(200 + 64);
             p2C.setScore(p2C.getScore() + 1);
         }
-        else if (ballC.getX() >= 810) {
+        else if (ballC.getX() >= 810) 
+        {
             ballC.setX(1400 - 64);
             p1C.setScore(p1C.getScore() + 1);
         }
@@ -357,14 +372,16 @@ void GameManager::updateBall() {
         dy = gravity;
     }
 
-    // Win conditions
-    if (p1C.getScore() == 5) {
+    //winner winner chicken breakfast
+    if (p1C.getScore() == 5) 
+    {
         over = true;
-        endText.setString("Player 1 Win!");
+        endText.setString("Player   1   Win!");
     }
-    if (p2C.getScore() == 5) {
+    if (p2C.getScore() == 5) 
+    {
         over = true;
-        endText.setString("Player 2 Win!");
+        endText.setString("Player   2   Win!");
     }
 }
 
@@ -373,69 +390,75 @@ void GameManager::checkCollisions() {
     FloatRect p2Bounds(p2C.getX() - 64, p2C.getY() - 128, 128, 128);
     FloatRect ballBounds(ballC.getX() - (96 * 0.7f), ballC.getY() - (96 * 0.7f), 96 * 0.7f * 2, 96 * 0.7f * 2);
 
-    if (ballBounds.intersects(p1Bounds)) {
+    if (ballBounds.intersects(p1Bounds)) 
+    {
         bounce.play();
-        if (p1C.getIsJumping()) {
+        if (p1C.getIsJumping()) 
+        {
             p1C.setIsFalling(true);
             p1C.setIsJumping(false);
         }
 
-        // Calculate velocity based on the difference between current and previous positions
+        //calcu vel based on difference of curr and prev positions
         float playerDx = p1C.getX() - p1C.getPrevX();
         float playerDy = p1C.getY() - p1C.getPrevY();
 
-        // Set ball velocity with a minimum horizontal speed and upward force
+        //set mo lang ball velocity with a minimum horizontal speed and upward force
         dx = playerDx * 1.5f;
         dy = -abs(playerDy) - 5.0f;
 
-        // Ensure minimum horizontal velocity if player isn't moving much
-        if (abs(dx) < 3.0f) {
+        //ensure minimum horizontal velocity if player isn't moving much
+        if (abs(dx) < 3.0f) 
             dx = (ballC.getX() < p1C.getX()) ? -5.0f : 5.0f;
-        }
 
-        // Ensure upward velocity
+        //upward vel
         if (dy > -3.0f) dy = -8.0f;
     }
 
-    if (ballBounds.intersects(p2Bounds)) {
+    if (ballBounds.intersects(p2Bounds)) 
+    {
         bounce.play();
-        if (p2C.getIsJumping()) {
+        if (p2C.getIsJumping()) 
+        {
             p2C.setIsFalling(true);
             p2C.setIsJumping(false);
         }
 
-        // Calculate velocity based on the difference between current and previous positions
+        // calcu velocity nnmn
         float playerDx = p2C.getX() - p2C.getPrevX();
         float playerDy = p2C.getY() - p2C.getPrevY();
 
-        // Set ball velocity with a minimum horizontal speed and upward force
+        //set mo lang ball velocity with a minimum horizontal speed and upward force
         dx = playerDx * 1.5f;
         dy = -abs(playerDy) - 5.0f;
 
-        // Ensure minimum horizontal velocity if player isn't moving much
+        //ensure minimum horizontal velocity if player isn't moving much
         if (abs(dx) < 3.0f) {
             dx = (ballC.getX() < p2C.getX()) ? -5.0f : 5.0f;
         }
 
-        // Ensure upward velocity
+        //upward vel agen
         if (dy > -3.0f) dy = -8.0f;
     }
 }
 
-void GameManager::render() {
+void GameManager::render() 
+{
     window.clear();
     window.draw(background); window.draw(wall); window.draw(ball);
 
-    // Set sprite textures based on current state
+    //set sprite textures based on current state
     Texture* p1Texture = nullptr; Texture* p2Texture = nullptr;
 
-    switch (p1C.getCurrentState()) {
+    switch (p1C.getCurrentState()) 
+    {
     case IDLE: p1Texture = p1IdleAnim.getCurrentTexture(); break;
     case RUNNING: p1Texture = p1RunAnim.getCurrentTexture(); break;
     case JUMPING: p1Texture = p1JumpAnim.getCurrentTexture(); break;
     }
 
-    switch (p2C.getCurrentState()) {
+    switch (p2C.getCurrentState()) 
+    {
     case IDLE: p2Texture = p2IdleAnim.getCurrentTexture(); break;
     case RUNNING: p2Texture = p2RunAnim.getCurrentTexture(); break;
     case JUMPING: p2Texture = p2JumpAnim.getCurrentTexture(); break;
@@ -455,11 +478,18 @@ void GameManager::render() {
 
     if (over) {
         dx = 0; dy = 0;
+        if (!playedCheer) 
+        {
+            crowd.play();
+            playedCheer = true;
+        }
         window.draw(endText); window.draw(retryButton); window.draw(retryText);
 
-        if (Mouse::isButtonPressed(Mouse::Left)) {
+        if (Mouse::isButtonPressed(Mouse::Left)) 
+        {
             Vector2i mousePos = Mouse::getPosition(window);
-            if (retryButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
+            if (retryButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) 
+            {
                 resetGame();
                 Event event;
                 while (Mouse::isButtonPressed(Mouse::Left)) { window.pollEvent(event); }
@@ -472,7 +502,9 @@ void GameManager::render() {
     }
 }
 
-void GameManager::resetGame() {
+void GameManager::resetGame() 
+{
+    playedCheer = false;
     over = false; p1C.setScore(0); p2C.setScore(0);
     p1C.setX(200); p1C.setY(840); p2C.setX(1400); p2C.setY(840);
     ballC.setX(250); ballC.setY(150); dx = 0; dy = 10;
