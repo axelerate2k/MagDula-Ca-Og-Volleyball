@@ -4,6 +4,7 @@ A simple two-player local multiplayer volleyball game built with SFML 2.6. The g
 
 ---
 ![image](https://github.com/user-attachments/assets/8738b15a-2e3c-4e63-8c10-827e8e56115e)
+![image](https://github.com/user-attachments/assets/410c16f4-165f-4e3a-a455-b942654e64e3)
 
 
 ## Features
