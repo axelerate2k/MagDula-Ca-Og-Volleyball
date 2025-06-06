@@ -1,4 +1,4 @@
-# MagDula-Ca-Og-Volleyball
+# MagDula Ca og Volleyball!
 
 A simple two-player local multiplayer volleyball game built with SFML 2.6. The game features realistic ball physics, animated characters, and a first-to-five scoring system.
 
