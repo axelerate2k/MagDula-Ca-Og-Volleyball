@@ -12,7 +12,7 @@
 using namespace std;
 using namespace sf;
 
-GameManager::GameManager() : window(VideoMode(WIDTH, HEIGHT), "Magdula Ca ug Volleyball!") {
+GameManager::GameManager() : window(VideoMode(WIDTH, HEIGHT), "Magdula Ca og Volleyball!") {
     window.setFramerateLimit(60);
     initialize();
 }
@@ -54,7 +54,7 @@ void GameManager::setupUI()
     font.loadFromFile("font/arcade.ttf");
 
     title.setFont(font); title.setCharacterSize(150); title.setFillColor(Color::Black);
-    title.setStyle(Text::Bold); title.setString("                 Magdula   Ca   ug \n                      Volleyball!");
+    title.setStyle(Text::Bold); title.setString("                 Magdula   Ca   og \n                      Volleyball!");
 
     startText.setFont(font); startText.setCharacterSize(50); startText.setFillColor(Color::Yellow);
     startText.setString("\n\n\n\n\n\n\n\n\n\n\n\n					     												              Press Enter to Play!!");
