@@ -78,7 +78,7 @@ void GameManager::setupUI()
     retryButton.setPosition(675, 300);
 
     instructionText.setFont(font); instructionText.setCharacterSize(40); instructionText.setFillColor(Color::Black);
-    instructionText.setString("Player															Controls\n\nPlayer 1\n  Move Left															A\n  Move Right														D\n  Jump																			   W\n  Speed Up																Space \n\nPlayer 2\n  Move Left											     Left Arrow\n  Move Right											Right Arrow\n  Jump																   Up Arrow\n  Speed Up												     Right Shift \n\nPress Enter to continue");
+    instructionText.setString("Player															Controls\n\nPlayer 1\n  Move Left															A\n  Move Right														D\n  Jump																			   W\n  Speed Up																Space \n\nPlayer 2\n  Move Left											     Left Arrow\n  Move Right											Right Arrow\n  Jump																   Up Arrow\n  Speed Up												     Right Shift \n\nPress Enter to continue\n\n Special Credits to\n itchio     ChatGPT     Canva     wlghd5524 on Github");
     instructionText.setPosition(200, 100);
 }
 
@@ -86,7 +86,7 @@ void GameManager::setupAudio()
 {
     music.openFromFile("musics/upmahal.mp3");
     bounceb.loadFromFile("musics/Bounce.wav"); bounce.setBuffer(bounceb);
-    crowdb.loadFromFile("musics/Crowd.wav"); crowd.setBuffer(crowdb);
+    crowdb.loadFromFile("musics/cheer.mp3"); crowd.setBuffer(crowdb);
     scoreb.loadFromFile("musics/ScoreM.wav"); scoreM.setBuffer(scoreb);
 }
 
