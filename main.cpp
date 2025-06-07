@@ -373,12 +373,12 @@ void GameManager::updateBall()
     }
 
     //winner winner chicken breakfast
-    if (p1C.getScore() == 3)
+    if (p1C.getScore() == 5)
     {
         over = true;
         endText.setString("Player   1   Win!");
     }
-    if (p2C.getScore() == 3)
+    if (p2C.getScore() == 5)
     {
         over = true;
         endText.setString("Player   2   Win!");
