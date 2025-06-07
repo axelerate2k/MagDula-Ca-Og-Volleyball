@@ -78,8 +78,8 @@ void GameManager::setupUI()
     retryButton.setPosition(675, 300);
 
     instructionText.setFont(font); instructionText.setCharacterSize(40); instructionText.setFillColor(Color::Black);
-    instructionText.setString("Player															Controls\n\nPlayer 1\n  Move Left															A\n  Move Right														D\n  Jump																			   W\n  Speed Up																Space \n\nPlayer 2\n  Move Left											     Left Arrow\n  Move Right											Right Arrow\n  Jump																   Up Arrow\n  Speed Up												     Right Shift \n\nPress Enter to continue\n\n Special Credits to\nitchio  x   ChatGPT   x  Canva   x  wlghd5524 on Github\nEric Beronio for bg music");
-    instructionText.setPosition(200, 100);
+    instructionText.setString("Do not let the ball land on your side \n The first player to score 5 points wins!\nPlayer															Controls\n\nPlayer 1\n  Move Left															A\n  Move Right														D\n  Jump																			   W\n  Speed Up																Space \n\nPlayer 2\n  Move Left											     Left Arrow\n  Move Right											Right Arrow\n  Jump																   Up Arrow\n  Speed Up												     Right Shift \n\nPress Enter to continue\n\n Special Credits to\nitchio  x   ChatGPT   x  Canva   x  wlghd5524 on Github\nEric Beronio for bg music");
+    instructionText.setPosition(200, 25);
 }
 
 void GameManager::setupAudio()
@@ -373,12 +373,12 @@ void GameManager::updateBall()
     }
 
     //winner winner chicken breakfast
-    if (p1C.getScore() == 5)
+    if (p1C.getScore() == 3)
     {
         over = true;
         endText.setString("Player   1   Win!");
     }
-    if (p2C.getScore() == 5)
+    if (p2C.getScore() == 3)
     {
         over = true;
         endText.setString("Player   2   Win!");
